@@ -131,7 +131,7 @@ namespace UITests
             Assert.That(modalWasDisplayed, Is.True);
         }
 
-        private IWebElement FindElement(By locator, IWebElement parent = null, int timeoutSeconds = 20)
+        private IWebElement FindElement(By locator, IWebElement parent = null, int timeoutSeconds = 30)
         {
             // WebDriverWait enables us to wait for the specified condition to be true
             // within a given time period.
