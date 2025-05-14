@@ -5,6 +5,7 @@ variables:
   buildConfiguration: 'Release'
   releaseBranchName: 'release'
   dotnetSdkVersion: '8.x'
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 schedules:
 - cron: '0 1 * * *'
@@ -34,6 +35,19 @@ stages:
       inputs:
         version: '$(dotnetSdkVersion)'
 
+    - task: Cache@2
+      inputs:
+        key: 'npm | "$(Agent.OS)" | package-lock.json'
+        path: '$(npm_config_cache)'
+        cacheHitVar: 'CACHE_RESTORED'
+        restoreKeys: 'npm | "$(Agent.OS)"'
+      displayName: 'Cache npm'
+
+    - task: Npm@1
+      condition: ne(variables.CACHE_RESTORED, 'true')
+      inputs:
+        command: 'install'    
+    
     - task: Npm@1
       displayName: 'Run npm install'
       inputs:
