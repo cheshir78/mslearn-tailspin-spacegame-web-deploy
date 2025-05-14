@@ -71,7 +71,7 @@
                                     <partial name="Profile" model="new ProfileViewModel { Profile = score.Profile, Rank = (rank - 1).ToString() }" />
                                     <a href="" data-toggle="modal" data-target="#profile-modal-@((rank - 1).ToString())">
                                         <img class="avatar" src="@score.Profile.AvatarUrl" alt="@score.Profile.UserName">
-                                        <div class="score-data username">
+                                        <div class="score-data username" id="profile-@((rank - 1).ToString())">
                                             @score.Profile.UserName
                                         </div>
                                     </a>
