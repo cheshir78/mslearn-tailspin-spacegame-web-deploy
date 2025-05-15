@@ -20,7 +20,7 @@ stages:
 - stage: 'Build'
   displayName: 'Build the web application'
   jobs: 
-  - job: 'Build'
+  - job: 'Build dev'
     displayName: 'Build job'
     pool:
       vmImage: 'ubuntu-20.04'
@@ -145,7 +145,7 @@ stages:
       eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
     )
   jobs:
-  - deployment: Deploy
+  - deployment: Deploy Dev
     pool:
       vmImage: 'ubuntu-20.04'
     environment: dev
@@ -169,7 +169,7 @@ stages:
   dependsOn: Dev
   #condition: eq(variables['Build.Reason'], 'Schedule')
   jobs:
-  - deployment: Deploy
+  - deployment: Deploy Test
     pool:
       vmImage: 'ubuntu-20.04'
     environment: test
@@ -218,7 +218,7 @@ stages:
   displayName: 'Deploy to the staging environment'
   dependsOn: Test
   jobs:
-  - deployment: Deploy
+  - deployment: Deploy Staging
     pool:
       vmImage: 'ubuntu-20.04'
     environment: staging
