@@ -126,6 +126,13 @@ stages:
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
+    - task: Npm@1
+      displayName: 'Reset version'
+      inputs:
+        command: 'custom'
+        workingDir: '$(Build.SourcesDirectory)'
+        customCommand: 'version 0.1.0 --no-git-tag-version'
+
 - stage: 'Dev'
   displayName: 'Deploy the dev environment'
   dependsOn: Build
