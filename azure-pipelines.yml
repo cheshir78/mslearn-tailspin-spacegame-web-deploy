@@ -6,7 +6,6 @@ variables:
   releaseBranchName: 'release'
   dotnetSdkVersion: '8.x'
   npm_config_cache: $(Pipeline.Workspace)/.npm
-  npm_config_cache1: $(Pipeline.Workspace)/node_modules
   CACHE_RESTORED: 'false'
 
 schedules:
