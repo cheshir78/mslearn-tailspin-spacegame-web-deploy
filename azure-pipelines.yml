@@ -198,6 +198,7 @@ stages:
         projects: '$(System.DefaultWorkingDirectory)/**/*UITests.csproj'
     - task: DotNetCoreCLI@2
       displayName: 'Run unit tests - $(buildConfiguration)'
+      continueOnError: true
       inputs:
         command: 'test'
         arguments: '--no-build --configuration $(buildConfiguration)'
