@@ -5,8 +5,8 @@ variables:
   buildConfiguration: 'Release'
   releaseBranchName: 'release'
   dotnetSdkVersion: '8.x'
-  npm_config_cache1: $(Pipeline.Workspace)/.npm
-  npm_config_cache: $(Pipeline.Workspace)/node_modules
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+  npm_config_cache1: $(Pipeline.Workspace)/node_modules
   CACHE_RESTORED: 'false'
 
 schedules:
@@ -41,20 +41,22 @@ stages:
       inputs:
         key: 'npm | "$(Agent.OS)" | package-lock.json'
         #key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+        key: 'npm | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
         path: '$(npm_config_cache)'
         cacheHitVar: CACHE_RESTORED
         restoreKeys: 'npm | "$(Agent.OS)"'
       displayName: 'Cache npm'
 
+    #- task: Npm@1
+    #  condition: ne(variables.CACHE_RESTORED, 'true')
+    #  inputs:
+    #    command: 'install'    
+    
     - task: Npm@1
       condition: ne(variables.CACHE_RESTORED, 'true')
+      displayName: 'Run npm install'
       inputs:
-        command: 'install'    
-    
-    #- task: Npm@1
-    #  displayName: 'Run npm install'
-    #  inputs:
-    #    verbose: false
+        verbose: true
 
     - script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
       displayName: 'Compile Sass assets'
