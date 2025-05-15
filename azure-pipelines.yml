@@ -20,9 +20,9 @@ stages:
 - stage: 'Build'
   displayName: 'Build the web application'
   jobs: 
-  - job: 'Build dev'
+  - job: 'Build'
     displayName: 'Build job'
-    pool:
+    pool:   
       vmImage: 'ubuntu-20.04'
       demands:
       - npm
@@ -190,7 +190,7 @@ stages:
               appName: '$(WebAppNameTest)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
   - job: RunUITests
-    dependsOn: Deploy
+    dependsOn: DeployTest
     displayName: 'Run UI tests'
     pool:
       vmImage: 'windows-2019'
