@@ -7,6 +7,7 @@ variables:
   dotnetSdkVersion: '8.x'
   npm_config_cache1: $(Pipeline.Workspace)/.npm
   npm_config_cache: $(Pipeline.Workspace)/node_modules
+  CACHE_RESTORED: 'false'
 
 schedules:
 - cron: '0 1 * * *'
@@ -41,7 +42,7 @@ stages:
         key: 'npm | "$(Agent.OS)" | package-lock.json'
         #key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
         path: '$(npm_config_cache)'
-        cacheHitVar: 'CACHE_RESTORED'
+        cacheHitVar: CACHE_RESTORED
         restoreKeys: 'npm | "$(Agent.OS)"'
       displayName: 'Cache npm'
 
@@ -126,12 +127,12 @@ stages:
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
-    - task: Npm@1
-      displayName: 'Reset version'
-      inputs:
-        command: 'custom'
-        workingDir: '$(Build.SourcesDirectory)'
-        customCommand: 'version 0.1.0 --no-git-tag-version'
+    #- task: Npm@1
+    #  displayName: 'Reset version'
+    #  inputs:
+    #    command: 'custom'
+    #    workingDir: '$(Build.SourcesDirectory)'
+    #    customCommand: 'version 0.1.0 --no-git-tag-version'
 
 - stage: 'Dev'
   displayName: 'Deploy the dev environment'
