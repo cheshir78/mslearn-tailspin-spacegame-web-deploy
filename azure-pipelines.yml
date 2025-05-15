@@ -39,9 +39,9 @@ stages:
 
     - task: Cache@2
       inputs:
-        #key: 'npm | "$(Agent.OS)" | package-lock.json'
+        key: 'npm | "$(Agent.OS)" | package-lock.json'
         #key: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-        key: 'npm | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+        #key: 'npm | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
         path: '$(npm_config_cache)'
         cacheHitVar: CACHE_RESTORED
         restoreKeys: 'npm | "$(Agent.OS)"'
