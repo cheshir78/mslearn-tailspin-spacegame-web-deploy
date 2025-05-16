@@ -20,13 +20,11 @@ namespace UITests
         public HomePageTest(string browser)
         {
             this.browser = browser;
-            Console.WriteLine("start ");
         }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            Console.WriteLine("sertuo");
             try
             {
                 // Create the driver for the current browser.
